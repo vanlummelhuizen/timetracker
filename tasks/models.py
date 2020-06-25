@@ -11,6 +11,9 @@ class Project(models.Model):
     class Meta:
         unique_together = ['name', 'user']
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     name = models.CharField(max_length=128)
@@ -33,3 +36,7 @@ class Session(models.Model):
     start = models.DateTimeField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     end = models.DateTimeField(default=None, null=True, blank=True)
+
+    def __str__(self):
+        return "{} :: {} | {} => {}".format(self.task.project, self.task, self.start.strftime("%Y-%m-%d %H:%M:%S"),
+                                            self.end.strftime("%Y-%m-%d %H:%M:%S"))
