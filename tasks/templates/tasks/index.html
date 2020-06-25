@@ -71,7 +71,14 @@
 	padding: 5px;
 ">
 	<div>
-		<h2>Current task: {{ current_task }}</h2>
+        {% if current_task %}
+		    <h2>Current task: {{ current_task }}</h2>
+            <a class="btn btn-default" href="{% url 'end_current_session' %}">
+                <span class="glyphicon glyphicon-stop">Stop</span>
+            </a>
+        {% else %}
+		    <h2>No current task</h2>
+        {% endif %}
 	</div>
 	<div style="
 		overflow-y: auto;

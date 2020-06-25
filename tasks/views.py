@@ -14,7 +14,10 @@ def index(request):
     current_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True)
     if len(current_sessions) > 1:
         pass  #TODO
-    current_task = current_sessions[0].task
+    elif not current_sessions:
+        current_task = None
+    else:
+        current_task = current_sessions[0].task
     return render(request, 'tasks/index.html', {'tasks': tasks, 'current_task': current_task})
 
 
@@ -40,5 +43,21 @@ def start_session(request, task_id):
 
     # Start a new session
     new_session = Session.objects.create(task=task, start=now)
+
+    return redirect('index')
+
+
+def end_current_session(request):
+    """
+    
+    :param request: 
+    :return: 
+    """
+    # Determine now
+    now = timezone.now()
+
+    # End all open session(s)
+    open_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True)
+    open_sessions.update(end=now)
 
     return redirect('index')
