@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Project(models.Model):
-    name = models.CharField(length=128)
+    name = models.CharField(max_length=128)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -13,7 +13,7 @@ class Project(models.Model):
 
 
 class Task(models.Model):
-    name = models.CharField(length=128)
+    name = models.CharField(max_length=128)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -21,10 +21,12 @@ class Task(models.Model):
 
 class Note(models.Model):
     text = models.TextField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Session(models.Model):
     start = models.DateTimeField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     end = models.DateTimeField(default=None, null=True, blank=True)
