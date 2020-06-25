@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from tasks.models import Task, Session
+from tasks.models import Task, Session, Note
 
 
 def index(request):
@@ -16,9 +16,11 @@ def index(request):
         pass  #TODO
     elif not current_sessions:
         current_task = None
+        notes = None
     else:
         current_task = current_sessions[0].task
-    return render(request, 'tasks/index.html', {'tasks': tasks, 'current_task': current_task})
+        notes = Note.objects.filter(task=current_task)
+    return render(request, 'tasks/index.html', {'tasks': tasks, 'current_task': current_task, 'notes': notes})
 
 
 def start_session(request, task_id):
