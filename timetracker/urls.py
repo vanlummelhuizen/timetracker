@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from tasks.views import index
+from tasks.views import index, start_session
 
 urlpatterns = [
     path('', index, name='index'),
+    path('start_session/<int:task_id>/', start_session, name='start_session'),
+
     path('admin/', admin.site.urls),
 ]

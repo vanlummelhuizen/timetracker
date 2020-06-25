@@ -60,7 +60,7 @@
 ">
 	<h2>Tasks</h2>
     {% for task in tasks %}
-    <p>{{ task }}</p>
+    <p><a class="btn btn-default" href="{% url 'start_session' task_id=task.id %}">{{ task }}</a></p>
     {% endfor %}
 </div>
   
@@ -71,7 +71,7 @@
 	padding: 5px;
 ">
 	<div>
-		<h2>Tasks</h2>
+		<h2>Current task: {{ current_task }}</h2>
 	</div>
 	<div style="
 		overflow-y: auto;
