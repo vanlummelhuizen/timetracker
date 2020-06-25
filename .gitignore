@@ -1,0 +1,7 @@
+.idea/
+*.pyc
+/logs/
+/venv/
+/static_root/
+.env
+/writable/
