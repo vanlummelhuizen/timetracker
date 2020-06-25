@@ -63,3 +63,22 @@ def end_current_session(request):
     open_sessions.update(end=now)
 
     return redirect('index')
+
+
+def add_note(request, task_id):
+    """
+    
+    :param request: 
+    :param task_id: 
+    :return: 
+    """
+    if request.method == 'POST':
+        if 'note' in request.POST:
+            # Get task
+            try:
+                task = Task.objects.get(pk=task_id)
+            except:
+                redirect('index')
+
+            note = Note.objects.create(task=task, text=request.POST['note'])
+    return redirect('index')
