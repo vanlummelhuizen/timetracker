@@ -32,6 +32,22 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="#">Messages</a></li>
+          <li>
+
+
+	<div class="navbar-text">
+        {% if current_task %}
+        <i>
+		    Current task: {{ current_task }}
+            </i>
+                <a  href="{% url 'end_current_session' %}">
+                    <span class="glyphicon glyphicon-stop"></span> Stop
+                </a>
+        {% else %}
+		    <i>No current task</i>
+        {% endif %}
+	</div>
+          </li>
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group input-group">
@@ -74,17 +90,6 @@
 	margin-left: 300px;
 	padding: 5px;
 ">
-	<div>
-        {% if current_task %}
-		    <h2>Current task: {{ current_task }}
-                <a class="btn btn-default btn-sm" href="{% url 'end_current_session' %}">
-                    <span class="glyphicon glyphicon-stop"></span> Stop
-                </a>
-            </h2>
-        {% else %}
-		    <h2>No current task</h2>
-        {% endif %}
-	</div>
 	<div style="
 		overflow-y: auto;
 		height: calc(100vh - 425px);
