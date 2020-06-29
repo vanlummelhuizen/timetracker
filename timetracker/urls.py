@@ -17,13 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 
-from tasks.views import index, start_session, end_current_session, add_note
+from tasks.views import index, start_session, end_current_session, add_note, CreateProject, UpdateProject, \
+    CreateTask, UpdateTask
 
 urlpatterns = [
     path('', login_required(index), name='index'),
     path('start_session/<int:task_id>/', login_required(start_session), name='start_session'),
     path('end_current_session/', login_required(end_current_session), name='end_current_session'),
     path('add_note/<int:task_id>/', login_required(add_note), name='add_note'),
+    path('project/create', login_required(CreateProject.as_view()), name='create_project'),
+    path('project/update/<int:pk>', login_required(UpdateProject.as_view()), name='update_project'),
+    path('task/create', login_required(CreateTask.as_view()), name='create_task'),
+    path('task/update/<int:pk>', login_required(UpdateTask.as_view()), name='update_task'),
 
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),

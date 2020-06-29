@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.views.generic import CreateView, UpdateView
+from django.urls import reverse_lazy
 
-from tasks.models import Task, Session, Note
+from tasks.models import Project, Task, Session, Note
+from tasks.forms import TaskForm
 
 
 def index(request):
@@ -82,3 +85,65 @@ def add_note(request, task_id):
 
             note = Note.objects.create(task=task, text=request.POST['note'])
     return redirect('index')
+
+
+class CreateProject(CreateView):
+    model = Project
+    fields = ['name']
+    template_name = 'generic_form.html'
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Create project"
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateProject(UpdateView):
+    model = Project
+    fields = ['name']
+    template_name = 'generic_form.html'
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Create project"
+        return context
+
+
+class CreateTask(CreateView):
+    model = Task
+    template_name = 'generic_form.html'
+    success_url = reverse_lazy('index')
+    form_class = TaskForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Create project"
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(CreateTask, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+
+class UpdateTask(UpdateView):
+    model = Task
+    template_name = 'generic_form.html'
+    success_url = reverse_lazy('index')
+    form_class = TaskForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Create project"
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(CreateTask, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
