@@ -14,15 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth.decorators import login_required
 
 from tasks.views import index, start_session, end_current_session, add_note
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('start_session/<int:task_id>/', start_session, name='start_session'),
-    path('end_current_session/', end_current_session, name='end_current_session'),
-    path('add_note/<int:task_id>/', add_note, name='add_note'),
+    path('', login_required(index), name='index'),
+    path('start_session/<int:task_id>/', login_required(start_session), name='start_session'),
+    path('end_current_session/', login_required(end_current_session), name='end_current_session'),
+    path('add_note/<int:task_id>/', login_required(add_note), name='add_note'),
 
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
