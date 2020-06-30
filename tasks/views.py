@@ -111,7 +111,7 @@ class UpdateProject(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "Create project"
+        context['title'] = "Update project"
         return context
 
 
@@ -123,7 +123,7 @@ class CreateTask(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "Create project"
+        context['title'] = "Create task"
         return context
 
     def get_form_kwargs(self):
@@ -140,7 +140,7 @@ class UpdateTask(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "Create project"
+        context['title'] = "Update task"
         return context
 
     def get_form_kwargs(self):
