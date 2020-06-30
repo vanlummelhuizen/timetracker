@@ -13,7 +13,7 @@ def index(request):
     :param request: 
     :return: 
     """
-    tasks = Task.objects.filter(project__user=request.user)
+    projects = Project.objects.all().prefetch_related('task_set')
     current_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True)
     if len(current_sessions) > 1:
         pass  #TODO
@@ -23,7 +23,7 @@ def index(request):
     else:
         current_task = current_sessions[0].task
         notes = Note.objects.filter(task=current_task)
-    return render(request, 'tasks/index.html', {'tasks': tasks, 'current_task': current_task, 'notes': notes})
+    return render(request, 'tasks/index.html', {'projects': projects, 'current_task': current_task, 'notes': notes})
 
 
 def start_session(request, task_id):

@@ -79,22 +79,21 @@
 	float: left;
 	overflow-y: auto;
 ">
-    {% regroup tasks by project as tasks_by_project %}
-    {% for project in tasks_by_project%}
+    {% for project in projects %}
         <div style="
             display: grid;
             grid-template-areas: 'title title title button-group';
             grid-gap: 10px;
             padding: 10px;
         ">
-            <div style="grid-area: title"><h3 style="margin: 0px 0px 0px 0px">{{ project.grouper }}</h3></div>
+            <div style="grid-area: title"><h3 style="margin: 0px 0px 0px 0px">{{ project }}</h3></div>
             <div style="grid-area: button-group">
-                <a href="{% url 'update_project' project.grouper.id %}" style="float: right; color: grey">
+                <a href="{% url 'update_project' project.id %}" style="float: right; color: grey">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </div>
         </div>
-        {% for task in project.list %}
+        {% for task in project.task_set.all %}
             <a class="undecorated" href="{% url 'start_session' task_id=task.id %}">
                 <div class="task-button" style="
                     width: 100%;
