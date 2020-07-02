@@ -44,7 +44,7 @@
 	<div class="navbar-text">
         {% if current_task %}
         <i>
-		    Current task: {{ current_task }}
+		    {{ current_task }}
             </i>
                 <a  href="{% url 'end_current_session' %}">
                     <span class="glyphicon glyphicon-stop"></span> Stop
@@ -85,12 +85,21 @@
             border-bottom: 1px solid grey;
     ">
         {% for session in recent_sessions %}
+            <div {% if forloop.last %}style="font-style: italic;"{% endif %}>
                 <h5 style="margin-bottom: 2px;">
                     {{ session.task.project }}
                     <a href="{% url 'start_session' task_id=session.task.id %}" style="color: grey;">{{ session.task }}</a>
                 </h5>
+            </div>
                 <div>
-                    {{ session.start.time }} - {{ session.end.time|default_if_none:"..." }}
+                    {{ session.start.time }} -
+                    {% if session.end %}
+                        {{ session.end.time }}
+                    {% else %}
+                        <a  href="{% url 'end_current_session' %}">
+                            <span class="glyphicon glyphicon-stop"></span> Stop
+                        </a>
+                    {% endif %}
                 </div>
         {% endfor %}
     </div>
@@ -166,7 +175,7 @@
                  ">
                     <div class="row">
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="12" id="note" name="note"></textarea>
+                            <textarea class="form-control" rows="12" id="note" name="note" autofocus></textarea>
                         </div>
                         <div class="col-sm-2">
                             <button type="submit" class="btn btn-default">Submit</button>
@@ -185,6 +194,13 @@
          console.log(objDiv.scrollHeight);
          objDiv.scrollTop = objDiv.scrollHeight;
     }
+    $('form').keydown(function(event) {
+      const keyCode_enter = 13;
+      if (event.ctrlKey && event.keyCode === keyCode_enter) {
+        $(this).trigger('submit');
+      }
+    })
+
 </script>
 
 </body>
