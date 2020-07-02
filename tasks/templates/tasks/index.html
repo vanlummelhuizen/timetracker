@@ -79,6 +79,21 @@
 	float: left;
 	overflow-y: auto;
 ">
+    <div style="
+            padding: 10px;
+            font-size: 11px;
+            border-bottom: 1px solid grey;
+    ">
+        {% for session in recent_sessions %}
+                <h5 style="margin-bottom: 2px;">
+                    {{ session.task.project }}
+                    <a href="{% url 'start_session' task_id=session.task.id %}" style="color: grey;">{{ session.task }}</a>
+                </h5>
+                <div>
+                    {{ session.start.time }} - {{ session.end.time|default_if_none:"..." }}
+                </div>
+        {% endfor %}
+    </div>
     {% for project in projects %}
         <div style="
             display: grid;

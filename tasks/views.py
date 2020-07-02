@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
+import datetime
 
 from tasks.models import Project, Task, Session, Note
 from tasks.forms import TaskForm
@@ -23,7 +24,16 @@ def index(request):
     else:
         current_task = current_sessions[0].task
         notes = Note.objects.filter(task=current_task)
-    return render(request, 'tasks/index.html', {'projects': projects, 'current_task': current_task, 'notes': notes})
+
+    today = datetime.date.today()
+    recent_sessions = Session.objects.filter(task__project__user=request.user).exclude(start__date__lt=today).order_by('-start')[:4:-1]
+
+    return render(request, 'tasks/index.html', {
+        'projects': projects,
+        'current_task': current_task,
+        'notes': notes,
+        'recent_sessions': recent_sessions
+    })
 
 
 def start_session(request, task_id):

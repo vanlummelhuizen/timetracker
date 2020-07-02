@@ -39,4 +39,4 @@ class Session(models.Model):
 
     def __str__(self):
         return "{} :: {} | {} => {}".format(self.task.project, self.task, self.start.strftime("%Y-%m-%d %H:%M:%S"),
-                                            self.end.strftime("%Y-%m-%d %H:%M:%S"))
+                                            (self.end.strftime("%Y-%m-%d %H:%M:%S") if self.end else '...'))
