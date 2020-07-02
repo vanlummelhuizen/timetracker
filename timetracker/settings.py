@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party apps
+    'markdownify',
 
     # Apps in this project
     'tasks',
@@ -141,3 +142,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MARKDOWNIFY_STRIP = False
+MARKDOWNIFY_WHITELIST_TAGS = {
+  'a', 'abbr', 'acronym', 'b', 'blockquote',
+  'em', 'i', 'li', 'ol', 'p', 'strong', 'ul',
+  'h1', 'h2', 'h3','h4', 'h5', 'h6', 'h7',
+  'span', 'code', 'pre'
+}
+MARKDOWNIFY_MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code',
+                                   'markdown.extensions.extra', ]

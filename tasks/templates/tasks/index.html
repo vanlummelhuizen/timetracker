@@ -1,3 +1,5 @@
+{% load markdownify %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,7 +148,7 @@
             {% for note in notes %}
               <div class="row">
                 <div class="col-sm-10">
-                    {{ note.text|linebreaksbr }}
+                    {{ note.text | markdownify }}
                 </div>
                 <div class="col-sm-2 well">
                     Last updated: {{ note.updated_at }}
