@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 
 from tasks.views import index, start_session, end_current_session, add_note, CreateProject, UpdateProject, \
-    CreateTask, UpdateTask
+    CreateTask, UpdateTask, UpdateNote
 
 urlpatterns = [
     path('', login_required(index), name='index'),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('project/update/<int:pk>', login_required(UpdateProject.as_view()), name='update_project'),
     path('task/create', login_required(CreateTask.as_view()), name='create_task'),
     path('task/update/<int:pk>', login_required(UpdateTask.as_view()), name='update_task'),
+    path('note/update/<int:pk>', login_required(UpdateNote.as_view()), name='update_note'),
 
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),

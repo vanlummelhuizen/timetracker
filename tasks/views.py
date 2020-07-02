@@ -157,3 +157,10 @@ class UpdateTask(UpdateView):
         kwargs = super(CreateTask, self).get_form_kwargs()
         kwargs.update({'user': self.request.user})
         return kwargs
+
+
+class UpdateNote(UpdateView):
+    model = Note
+    template_name = 'generic_form.html'
+    success_url = reverse_lazy('index')
+    fields = ['text']
