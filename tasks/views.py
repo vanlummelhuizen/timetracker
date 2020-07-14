@@ -8,16 +8,16 @@ from tasks.models import Project, Task, Session, Note
 from tasks.forms import TaskForm
 
 
-def index(request):
+def get_global_context(request):
     """
-    
+    Get the global context for showing the side bar
     :param request: 
     :return: 
     """
     projects = Project.objects.all().prefetch_related('task_set')
     current_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True)
     if len(current_sessions) > 1:
-        pass  #TODO
+        pass  # TODO
     elif not current_sessions:
         current_task = None
         notes = None
@@ -26,14 +26,25 @@ def index(request):
         notes = Note.objects.filter(task=current_task)
 
     today = datetime.date.today()
-    recent_sessions = Session.objects.filter(task__project__user=request.user).exclude(start__date__lt=today).order_by('-start')[:4:-1]
+    recent_sessions = Session.objects.filter(task__project__user=request.user).exclude(start__date__lt=today).order_by(
+        '-start')[:4:-1]
 
-    return render(request, 'tasks/index.html', {
+    return {
         'projects': projects,
         'current_task': current_task,
         'notes': notes,
         'recent_sessions': recent_sessions
-    })
+    }
+
+
+def index(request):
+    """
+    
+    :param request: 
+    :return: 
+    """
+
+    return render(request, 'tasks/index.html', get_global_context(request))
 
 
 def start_session(request, task_id):
@@ -105,6 +116,7 @@ class CreateProject(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(get_global_context(self.request))
         context['title'] = "Create project"
         return context
 
@@ -121,6 +133,7 @@ class UpdateProject(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(get_global_context(self.request))
         context['title'] = "Update project"
         return context
 
@@ -133,6 +146,7 @@ class CreateTask(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(get_global_context(self.request))
         context['title'] = "Create task"
         return context
 
@@ -150,6 +164,7 @@ class UpdateTask(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(get_global_context(self.request))
         context['title'] = "Update task"
         return context
 
