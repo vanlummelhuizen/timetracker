@@ -46,6 +46,11 @@ def index(request):
     return render(request, 'tasks/index.html', get_global_context(request))
 
 
+def menu(request):
+    context = get_global_context(request)
+    return render(request, 'menu.html', context)
+
+
 def start_session(request, task_id):
     """
     
