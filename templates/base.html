@@ -83,17 +83,19 @@
             padding: 10px;
         ">
             <div style="grid-area: title"><h3 style="margin: 0px 0px 0px 0px">{{ project }}</h3></div>
-            <div style="grid-area: button-group">
-                <a href="{% url 'create_task' %}?project={{ project.id }}" style="float: right; color: grey" title="Create task">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-                <a href="{% url 'update_project' project.id %}" style="float: right; color: grey" title="Edit project">
+            <div style="grid-area: button-group;">
+              <div style="float: right;">
+                <a href="{% url 'update_project' project.id %}" style="color: grey" title="Edit project">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
+                <a href="{% url 'create_task' %}?project={{ project.id }}" style="color: grey" title="Create task">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+              </div>
             </div>
         </div>
         {% for task in project.task_set.all %}
-            <a class="undecorated" href="{% url 'start_session' task_id=task.id %}">
+            <a class="undecorated" href="{% url 'start_session' task_id=task.id %}" title="Start task">
                 <div class="task-button" style="
                     width: 100%;
                     margin-top: 2px;
