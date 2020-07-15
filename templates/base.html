@@ -16,12 +16,6 @@
         min-height: 100%;
         overflow-x: hidden;
     }
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
     .task-button:hover {
         background-color: white;
     }
@@ -47,7 +41,7 @@
     ">
       <a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span></a>
       &nbsp;&nbsp;
-      <a href="{% url 'create_project' %}"><span class="glyphicon glyphicon-plus"></span> project</a>
+      <a href="{% url 'create_project' %}" class="undecorated"><span class="glyphicon glyphicon-plus"></span> project</a>
       &nbsp;&nbsp;
       <a href="{% url 'menu' %}"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
     </div>
@@ -74,7 +68,7 @@
                         {% endif %}
                         {{ session.end.time }}
                     {% else %}
-                        <a  href="{% url 'end_current_session' %}" title="Stop current session">
+                        <a href="{% url 'end_current_session' %}" title="Stop current session" class="undecorated">
                             <span class="glyphicon glyphicon-stop"></span> Stop
                         </a>
                     {% endif %}
