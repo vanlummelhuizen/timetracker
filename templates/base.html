@@ -46,13 +46,14 @@
       <a href="{% url 'menu' %}"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
     </div>
     <div style="
-            padding: 10px;
+            padding-bottom: 5px;
             font-size: 11px;
             border-bottom: 1px solid grey;
     ">
         {% for session in recent_sessions %}
-            <div {% if forloop.last %}style="font-style: italic;"{% endif %}>
-                <h5 style="margin-bottom: 2px;">
+          <div style="padding: 2px 10px 7px 10px;{% if forloop.last %}background-color: white;{% endif %}">
+            <div>
+                <h5 style="margin-bottom: 2px; margin-top: 2px">
                     {{ session.task.project }}
                     <a href="{% url 'start_session' task_id=session.task.id %}" style="color: grey;">{{ session.task }}</a>
                 </h5>
@@ -73,6 +74,7 @@
                         </a>
                     {% endif %}
                 </div>
+            </div>
         {% endfor %}
     </div>
     {% for project in projects %}
