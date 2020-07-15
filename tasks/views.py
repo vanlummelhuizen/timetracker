@@ -183,3 +183,9 @@ class UpdateNote(UpdateView):
     template_name = 'generic_form.html'
     success_url = reverse_lazy('index')
     fields = ['text']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(get_global_context(self.request))
+        context['title'] = "Update note"
+        return context
