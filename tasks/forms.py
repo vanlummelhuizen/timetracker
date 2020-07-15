@@ -17,5 +17,7 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
+        project = kwargs.pop('project')
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['project'].queryset = Project.objects.filter(user=user)
+        self.fields['project'].initial = project

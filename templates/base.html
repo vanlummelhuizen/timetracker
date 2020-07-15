@@ -1,3 +1,5 @@
+{% load markdownify %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,13 +33,20 @@
 <body>
 
 <div style="
-	background-color: #d4d4d4;
+	background-color: #E4E4E4;
 	height: 100vh;
 	width: 300px;
 	float: left;
 	overflow-y: auto;
 	margin: 0px;
 ">
+    <div style="
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid grey;
+    ">
+        <a href="{% url 'create_project' %}"><span class="glyphicon glyphicon-plus"></span> project</a>
+    </div>
     <div style="
             padding: 10px;
             font-size: 11px;
@@ -51,6 +60,7 @@
                 </h5>
             </div>
                 <div>
+                    {{ session.start.date }} &nbsp;&nbsp;&nbsp;&nbsp;
                     {{ session.start.time }} -
                     {% if session.end %}
                         {{ session.end.time }}
@@ -71,6 +81,9 @@
         ">
             <div style="grid-area: title"><h3 style="margin: 0px 0px 0px 0px">{{ project }}</h3></div>
             <div style="grid-area: button-group">
+                <a href="{% url 'create_task' %}?project={{ project.id }}" style="float: right; color: grey" title="Create task">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
                 <a href="{% url 'update_project' project.id %}" style="float: right; color: grey" title="Edit project">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>

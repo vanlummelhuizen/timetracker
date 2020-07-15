@@ -26,8 +26,7 @@ def get_global_context(request):
         notes = Note.objects.filter(task=current_task)
 
     today = datetime.date.today()
-    recent_sessions = Session.objects.filter(task__project__user=request.user).exclude(start__date__lt=today).order_by(
-        '-start')[:4:-1]
+    recent_sessions = Session.objects.filter(task__project__user=request.user).order_by('-start')[:4:-1]
 
     return {
         'projects': projects,
@@ -152,7 +151,7 @@ class CreateTask(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(CreateTask, self).get_form_kwargs()
-        kwargs.update({'user': self.request.user})
+        kwargs.update({'user': self.request.user, 'project': self.request.GET.get('project', None)})
         return kwargs
 
 
