@@ -83,9 +83,9 @@
             display: grid;
             grid-template-areas: 'title title title button-group';
             grid-gap: 10px;
-            padding: 10px;
+            padding: 5px 10px 5px 10px;
         ">
-            <div style="grid-area: title"><h3 style="margin: 0px 0px 0px 0px">{{ project }}</h3></div>
+            <div style="grid-area: title"><h4 style="margin: 0px 0px 0px 0px; color: grey">{{ project }}</h4></div>
             <div style="grid-area: button-group;">
               <div style="float: right;">
                 <a href="{% url 'update_project' project.id %}" style="color: grey" title="Edit project">
@@ -97,19 +97,36 @@
               </div>
             </div>
         </div>
-        {% for task in project.task_set.all %}
-            <a class="undecorated" href="{% url 'start_session' task_id=task.id %}" title="Start task">
-                <div class="task-button" style="
-                    width: 100%;
-                    margin-top: 2px;
-                    color: black;
-                    padding: 3px 10px 3px 10px;
-                    line-height: 1.1;
-                ">
-                    {{ task }}
-                </div>
-            </a>
-        {% endfor %}
+        {% with project.task_set.all as tasks %}
+          {% if tasks %}
+            {% for task in tasks %}
+                <a class="undecorated" href="{% url 'start_session' task_id=task.id %}" title="Start task">
+                    <div class="task-button" style="
+                        width: 100%;
+                        margin-top: 2px;
+                        color: black;
+                        padding: 3px 10px 3px 10px;
+                        line-height: 1.1;
+                    ">
+                        {{ task }}
+                    </div>
+                </a>
+            {% endfor %}
+          {% else %}
+            <div style="
+                        width: 100%;
+                        margin-top: 2px;
+                        color: black;
+                        padding: 3px 10px 3px 10px;
+                        line-height: 1.1;
+                    ">
+                <i>No tasks</i>
+            </div>
+          {% endif %}
+        {% endwith %}
+        {% if not forloop.last %}
+          <hr style="margin: 2px 10px 2px 10px;"/>
+        {% endif %}
     {% endfor %}
 </div>
 
