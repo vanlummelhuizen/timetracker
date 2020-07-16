@@ -67,12 +67,13 @@ def start_session(request, task_id):
     except:
         redirect('index')
 
-    # End open session(s)
-    open_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True)
+    # End open session(s) except for an open session for the selected task
+    open_sessions = Session.objects.filter(task__project__user=request.user, end__isnull=True).exclude(task=task)
     open_sessions.update(end=now)
 
-    # Start a new session
-    new_session = Session.objects.create(task=task, start=now)
+    # Start a new session unless there is a open session for the selected task
+    if not Session.objects.filter(task=task, end__isnull=True):
+        new_session = Session.objects.create(task=task, start=now)
 
     return redirect('index')
 
