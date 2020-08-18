@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<h1>Menu</h1>
+<div style="margin-left:300px">
+    <h1>Menu</h1>
+    <ul class="section-nav">
+        <li class="toc-entry toc-h2">
+            <a href="{% url 'logout' %}">Log out</a>
+        </li>
+    </ul>
+</div>
 {% endblock %}
