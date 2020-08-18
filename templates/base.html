@@ -60,15 +60,13 @@
                 </h5>
             </div>
                 <div>
-                    {{ session.start.date|date:"F" }}
-                    {{ session.start.date.day }} &nbsp;&nbsp;
-                    {{ session.start.time }} &horbar;
+                    {{ session.start|date:"F j" }} &nbsp;
+                    {{ session.start|time:"H:i" }} &horbar;
                     {% if session.end %}
                         {% if session.end.date != session.start.date %}
-                          {{ session.end.date|date:"F" }}
-                          {{ session.end.date.day }} &nbsp;&nbsp;
+                          {{ session.end.date|date:"F j" }} &nbsp;
                         {% endif %}
-                        {{ session.end.time }}
+                        {{ session.end|time:"H:i" }}
                     {% else %}
                         <a href="{% url 'end_current_session' %}" title="Stop current session" class="undecorated">
                             <span class="glyphicon glyphicon-stop"></span> Stop
