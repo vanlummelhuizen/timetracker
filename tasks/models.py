@@ -7,9 +7,10 @@ class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    index = models.PositiveIntegerField(default=0)
 
     class Meta:
-        unique_together = ['name', 'user']
+        unique_together = ['name', 'user']  #(('name', 'user'), ('user', 'index'))
 
     def __str__(self):
         return self.name
@@ -20,6 +21,10 @@ class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    index = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ()  #(('project', 'index'))
 
     def __str__(self):
         return self.name
