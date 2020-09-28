@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 def set_project_index(apps, schema_editor):
-    Project = apps.get_model('tasks', 'Project  ')
+    Project = apps.get_model('tasks', 'Project')
     for user_id in Project.objects.values_list('user_id', flat=True).order_by().distinct():
         for index, project in enumerate(Project.objects.filter(user_id=user_id), 1):
             project.index = index
